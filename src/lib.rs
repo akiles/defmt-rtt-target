@@ -12,16 +12,6 @@ static mut CHANNEL: Option<UpChannel> = None;
 #[defmt::global_logger]
 struct Logger;
 
-impl defmt::Write for Logger {
-    fn write(&mut self, bytes: &[u8]) {
-        unsafe {
-            if let Some(c) = &mut CHANNEL {
-                c.write(bytes);
-            }
-        };
-    }
-}
-
 pub fn init(channel: UpChannel) {
     unsafe { CHANNEL = Some(channel) }
 }
@@ -30,7 +20,7 @@ static TAKEN: AtomicBool = AtomicBool::new(false);
 static INTERRUPTS_ACTIVE: AtomicBool = AtomicBool::new(false);
 
 unsafe impl defmt::Logger for Logger {
-    fn acquire() -> Option<NonNull<dyn defmt::Write>> {
+    fn acquire() -> bool {
         let primask = register::primask::read();
         interrupt::disable();
         if !TAKEN.load(Ordering::Relaxed) {
@@ -39,21 +29,28 @@ unsafe impl defmt::Logger for Logger {
 
             INTERRUPTS_ACTIVE.store(primask.is_active(), Ordering::Relaxed);
 
-            Some(NonNull::from(&Logger as &dyn defmt::Write))
+            true
         } else {
             if primask.is_active() {
                 // re-enable interrupts
                 unsafe { interrupt::enable() }
             }
-            None
+            false
         }
     }
 
-    unsafe fn release(_: NonNull<dyn defmt::Write>) {
+    unsafe fn release() {
         TAKEN.store(false, Ordering::Relaxed);
         if INTERRUPTS_ACTIVE.load(Ordering::Relaxed) {
             // re-enable interrupts
             interrupt::enable()
         }
     }
+
+    unsafe fn write(bytes: &[u8]) {
+        if let Some(c) = &mut CHANNEL {
+            c.write(bytes);
+        }
+    }
+
 }
