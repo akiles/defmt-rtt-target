@@ -25,7 +25,8 @@ fn main() -> ! {
             0: {
                 size: 1024
                 mode: BlockIfFull
-                name: "Terminal"
+                // probe-run autodetects whether defmt is in use based on this channel name
+                name: "defmt"
             }
         }
         down: {
