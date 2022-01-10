@@ -4,6 +4,12 @@ edition = "2018"
 license = "MIT OR Apache-2.0"
 name = "defmt-rtt-target"
 version = "0.3.0"
+categories = [
+    "embedded",
+    "no-std",
+]
+description = "defmt logger implementation using the rtt-target crate"
+repository = "https://github.com/akiles/defmt-rtt-target"
 
 [dependencies]
 defmt = "0.3.0"
