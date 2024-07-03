@@ -59,8 +59,9 @@ unsafe impl defmt::Logger for Logger {
 
 fn do_write(bytes: &[u8]) {
     unsafe {
-        if let Some(c) = &mut CHANNEL {
+        let channel = core::ptr::addr_of_mut!(CHANNEL);
+        if let Some(Some(c)) = channel.as_mut() {
             c.write(bytes);
         }
-    };
+    }
 }

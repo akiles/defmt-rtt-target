@@ -1,6 +1,6 @@
 # `defmt-rtt-target`
 
-[`defmt`](https://github.com/knurling-rs/defmt) logger implementation using [`rtt-target`](https://github.com/mvirkkunen/rtt-target).
+[`defmt`](https://github.com/knurling-rs/defmt) logger implementation using [`rtt-target`](https://github.com/probe-rs/rtt-target).
 
 The official [`defmt-rtt`](https://github.com/knurling-rs/defmt/tree/main/firmware/defmt-rtt) crate has its own RTT
 implementation that is not externally exposed. This is done so that users can't corrupt the defmt log stream
