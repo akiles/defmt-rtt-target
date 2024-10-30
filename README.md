@@ -1,6 +1,6 @@
 # ARCHIVED
 
-`rtt-target` itself has defmt support now. 
+Don't use this. `rtt-target` itself has defmt support now, making this crate unnecessary.
 
 - Example: https://github.com/probe-rs/rtt-target/blob/master/examples-cortex-m/src/bin/defmt.rs
 - PR that added it: https://github.com/probe-rs/rtt-target/pull/49
