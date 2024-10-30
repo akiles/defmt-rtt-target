@@ -1,3 +1,10 @@
+# ARCHIVED
+
+`rtt-target` itself has defmt support now. 
+
+- Example: https://github.com/probe-rs/rtt-target/blob/master/examples-cortex-m/src/bin/defmt.rs
+- PR that added it: https://github.com/probe-rs/rtt-target/pull/49
+
 # `defmt-rtt-target`
 
 [`defmt`](https://github.com/knurling-rs/defmt) logger implementation using [`rtt-target`](https://github.com/mvirkkunen/rtt-target).
